@@ -1,0 +1,84 @@
+/* Estilos para cards genéricos */
+.card {
+    background-color: var(--bg-secondary);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s, border-color 0.3s;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+/* Estilos específicos para os cards de comparação */
+.card--comparison {
+    flex: 1 1 300px; /* Permite que os cards cresçam, encolham e tenham uma base de 300px */
+    max-width: 350px; /* Limita a largura máxima para não ficarem muito grandes */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Empurra o botão para baixo */
+}
+
+/* Estilo para o botão "Saber mais" */
+.toggle-details-btn {
+    margin-top: 1.5rem; /* Espaçamento acima do botão */
+    width: fit-content; /* Ajusta a largura ao conteúdo */
+    display: block; /* Garante que o margin-top funcione corretamente */
+    margin-left: auto; /* Centraliza o botão se necessário, ou alinha à direita */
+    margin-right: auto; /* Centraliza o botão se necessário, ou alinha à esquerda */
+}
+
+/* Estilo para o container de detalhes */
+.details-container {
+    margin-top: 1.5rem; /* Espaçamento acima do container de detalhes */
+    padding-top: 1rem; /* Espaçamento interno superior */
+    border-top: 1px solid var(--border-color); /* Linha separadora */
+}
+
+.details-container h4 {
+    margin-bottom: 1rem;
+    color: var(--text-color-light);
+}
+
+.details-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.details-table td {
+    padding: 0.6rem 0; /* Aumenta o padding para melhor espaçamento */
+    border-bottom: 1px solid var(--border-color-light); /* Linha mais suave */
+    font-size: 0.95rem;
+}
+
+.details-table tr:last-child td {
+    border-bottom: none; /* Remove a borda da última linha */
+}
+
+.details-table td:first-child {
+    color: var(--text-color-light); /* Cor mais suave para o label */
+}
+
+.details-table td:last-child {
+    text-align: right;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+/* Cores para valores de impostos e líquidos */
+.details-table td.text-tax {
+    color: var(--color-red, #ef4444) !important; /* Vermelho para impostos */
+}
+
+.details-table td.text-liquid {
+    color: var(--color-green, #22c55e) !important; /* Verde para líquidos */
+}
+
+/* Cores para valores de impostos e líquidos fora da tabela de detalhes */
+.text-tax {
+    color: var(--color-red, #ef4444); /* Vermelho para impostos */
+}
+
+.text-liquid {
+    color: var(--color-green, #22c55e); /* Verde para líquidos */
+}

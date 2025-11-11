@@ -1,0 +1,125 @@
+/* Estilos para a barra de navegação (Navbar) */
+.navbar {
+    position: sticky; /* Fixa a navbar no topo ao rolar */
+    top: 0;
+    z-index: 10; /* Garante que a navbar fique acima de outros elementos */
+    background-color: var(--bg-primary); /* Cor de fundo baseada na variável de tema */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil */
+    border-bottom: 1px solid var(--border-color); /* Borda inferior */
+}
+
+/* Container interno da navbar para centralizar e limitar largura */
+.navbar__container {
+    max-width: 80rem; /* Largura máxima */
+    margin: 0 auto; /* Centraliza o container */
+    padding: 0 1rem; /* Preenchimento horizontal */
+    display: flex; /* Usa flexbox para alinhamento de itens */
+    justify-content: space-between; /* Espaça os itens nas extremidades */
+    align-items: center; /* Alinha itens verticalmente ao centro */
+    height: 4rem; /* Altura fixa da navbar */
+}
+
+/* Estilos para o logo da aplicação */
+.navbar__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 800;
+    transition: all 150ms;
+    text-decoration: none;
+}
+.navbar__logo-dev {
+    background-color: var(--color-primary);
+    color: #1f2937;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+}
+.navbar__logo-play {
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+}
+
+/* Menu de navegação para telas maiores (desktop) */
+.navbar__menu {
+    display: none; /* Oculto por padrão em telas pequenas */
+}
+@media (min-width: 768px) {
+    .navbar__menu {
+        display: flex; /* Exibe como flexbox em telas maiores */
+        gap: 2rem; /* Espaçamento entre os links */
+    }
+}
+
+/* Estilos para os links do menu de navegação */
+.navbar__link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 150ms;
+}
+.navbar__link:hover {
+    color: var(--color-primary); /* Altera a cor ao passar o mouse */
+}
+
+/* Botão de alternância de tema */
+.navbar__theme-toggle {
+    margin-left: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: block; /* Sempre visível */
+}
+.navbar__theme-toggle:hover {
+    color: var(--color-primary); /* Altera a cor ao passar o mouse */
+}
+
+/* Botão do menu mobile (hambúrguer) */
+.navbar__mobile-menu-button {
+    display: block; /* Visível por padrão em telas pequenas */
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+@media (min-width: 768px) {
+    .navbar__mobile-menu-button {
+        display: none; /* Oculto em telas maiores */
+    }
+}
+
+/* Menu mobile que aparece ao clicar no botão hambúrguer */
+.navbar__mobile-menu {
+    display: none; /* Oculto por padrão */
+    padding-bottom: 0.75rem;
+    border-top: 1px solid var(--border-color);
+}
+@media (min-width: 768px) {
+    .navbar__mobile-menu {
+        display: none; /* Oculto em telas maiores */
+    }
+}
+
+/* Estilos para os links dentro do menu mobile */
+.navbar__mobile-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin: 0.25rem 1rem 0;
+}
+.navbar__mobile-link--active {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}

@@ -1,0 +1,24 @@
+/* Estilos para o cabeçalho da página */
+.header {
+    text-align: center; /* Centraliza o texto */
+    margin: 2.5rem 0; /* Margem superior e inferior */
+    padding: 0 1rem; /* Preenchimento horizontal */
+}
+
+/* Título principal do cabeçalho */
+.header__title {
+    font-size: 2.25rem;
+    font-weight: bold;
+    color: var(--color-primary); /* Cor primária do tema */
+}
+@media (min-width: 768px) {
+    .header__title {
+        font-size: 2.5rem; /* Aumenta o tamanho da fonte em telas maiores */
+    }
+}
+
+/* Subtítulo do cabeçalho */
+.header__subtitle {
+    color: var(--text-secondary); /* Cor secundária do texto do tema */
+    margin-top: 0.5rem; /* Margem superior */
+}

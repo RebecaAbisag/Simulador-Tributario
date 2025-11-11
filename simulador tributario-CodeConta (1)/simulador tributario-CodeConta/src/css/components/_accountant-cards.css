@@ -1,0 +1,45 @@
+/* Estilos para a lista de contadores */
+.accountant-list {
+    display: grid;
+    grid-template-columns: 1fr; /* Uma coluna em telas pequenas */
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .accountant-list {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Colunas responsivas */
+    }
+}
+
+/* Estilos para o card de contador individual */
+.accountant-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    box-shadow: var(--shadow-md);
+}
+
+.accountant-card h3 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+.accountant-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+}
+
+.accountant-card a {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+.accountant-card a:hover {
+    color: var(--color-secondary);
+}
