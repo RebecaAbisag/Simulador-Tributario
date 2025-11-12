@@ -1,0 +1,47 @@
+/* Chat flutuante */
+.floating-chat {
+    position: fixed; /* Posição fixa na tela */
+    bottom: 1.5rem; /* Distância do fundo */
+    right: 1.5rem; /* Distância da direita */
+    width: 100%;
+    max-width: 400px; /* Largura máxima do chat */
+    z-index: 100; /* Garante que o chat flutue acima de outros elementos */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* Sombra para destacar */
+    border-radius: 12px;
+    overflow: hidden;
+    display: none; /* Oculto por padrão */
+}
+
+.floating-chat.is-visible {
+    display: block; /* Exibe o chat quando a classe is-visible é adicionada */
+}
+
+/* Botão para alternar a visibilidade do chat flutuante */
+.floating-chat-toggle-button {
+    position: fixed; /* Posição fixa na tela */
+    bottom: 1.5rem; /* Distância do fundo */
+    right: 1.5rem; /* Distância da direita */
+    background-color: var(--color-primary); /* Cor de fundo primária */
+    color: #1f2937; /* Cor do texto */
+    border: none;
+    border-radius: 50%; /* Botão redondo */
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Sombra para destacar */
+    z-index: 101; /* Acima do chat flutuante */
+    transition: background-color 0.2s;
+}
+
+.floating-chat-toggle-button:hover {
+    background-color: #f59e0b; /* Efeito hover */
+}
+
+.floating-chat-toggle-button .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}

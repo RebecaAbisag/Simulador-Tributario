@@ -1,0 +1,122 @@
+/* Título da seção de resultados */
+.results__title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: var(--color-primary);
+    text-align: center;
+}
+
+/* Card de destaque para a melhor opção */
+.card--highlight {
+    border: 3px solid var(--color-secondary);
+    text-align: center;
+}
+
+/* Título dentro dos cards de resultado */
+.card__title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: var(--color-secondary);
+}
+
+/* Valor líquido exibido nos cards */
+.card__value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+/* Texto de economia nos cards */
+.card__savings {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+}
+
+/* Estilo para a recomendação do contador no card de destaque */
+.card__accountant-recommendation {
+    background-color: var(--bg-tertiary); /* Um fundo sutil */
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem; /* Cantos arredondados */
+    padding: 0.75rem 1rem; /* Espaçamento interno */
+    margin-top: 1rem; /* Margem superior para separar */
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    display: inline-block; /* Para que o bloco se ajuste ao conteúdo */
+}
+.card__accountant-recommendation .link {
+    font-weight: bold;
+    color: var(--color-primary); /* Cor do link */
+}
+.card__accountant-recommendation .link:hover {
+    color: var(--color-secondary); /* Efeito hover no link */
+}
+
+/* Container para os cards de comparação */
+.comparison {
+    display: grid;
+    grid-template-columns: 1fr; /* Uma coluna em telas pequenas */
+    gap: 1.5rem;
+}
+@media (min-width: 768px) {
+    .comparison {
+        grid-template-columns: repeat(3, 1fr); /* Três colunas em telas maiores */
+    }
+}
+
+/* Estilos para cards de comparação individuais */
+.card--comparison {
+    padding: 1.25rem;
+}
+
+/* Cores específicas para títulos de cards de comparação */
+.card__title--mei {
+    color: #34d399; /* Verde */
+}
+.card__title--pj-simples {
+    color: var(--color-primary); /* Cor primária */
+}
+.card__title--lucro-presumido {
+    color: #facc15; /* Amarelo */
+}
+
+/* Descrição nos cards de comparação */
+.card__description {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+}
+
+/* Detalhes dentro dos cards de comparação */
+.card__details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Valor líquido nos cards de comparação */
+.card__liquid {
+    font-size: 1.125rem;
+    font-weight: bold;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Disclaimer da seção de resultados */
+.results__disclaimer {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 2rem;
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Estilos para o card da melhor opção */
+.card--best {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 25px rgba(251,191,36,0.15);
+}

@@ -1,0 +1,18 @@
+/* Estilos para ícones */
+.icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* Animação de rotação para ícones (usado em loaders) */
+.icon--spin {
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
