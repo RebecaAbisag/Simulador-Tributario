@@ -36,6 +36,16 @@ function initializeEventListeners() {
       handleSimulation();
     });
   }
+  const chk = document.getElementById('mostrarOpcional');
+  const campo = document.getElementById('campoOpcional');
+  const input = document.getElementById('numero');
+
+  chk.addEventListener('change', () => {
+    const mostrar = chk.checked;
+    campo.classList.toggle('hidden',!mostrar);
+    // desativa o campo quando escondido para não enviar no form
+    input.disabled = !mostrar;
+  });
 
   // Adiciona um event listener para os botões de "saber mais"
   document.addEventListener('click', (e) => {

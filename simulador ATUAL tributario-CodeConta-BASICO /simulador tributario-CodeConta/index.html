@@ -70,15 +70,43 @@
           <div class="form__group">
             <div>
               <label for="salarioBruto" class="form__label">Salário Bruto Mensal / Faturamento PJ (R$)</label>
-              <input type="number" id="salarioBruto" placeholder="Ex: 15000" required class="form__input" value="10000">
+              <input type="number" id="salarioBruto" placeholder="Ex: 15000" required class="form__input" value="10000" step="0.01">
               <p class="form__tip">Valor base a ser comparado nos três regimes.</p>
             </div>
           </div>
+          <!-- CheckBox -->
+          <div class="form__group">
+            <label>
+              <input type="checkbox" id="mostrarOpcional"> Mostrar campo opcional
+            </label>
+          </div>
+          <!-- (Campo opcional) Salário Bruto Anual -->
+          <div class="form__group">
+            <div id="campoOpcional" class="hidden form_alt">
+              <label for="salarioAnual">Salário Bruto Anual </label>
+              <input type="number" id="salarioAnual" step="0.01" placeholder="0,00">
+              <p class="form__tip">Valor opcional se não preenchido será utilizado o Salário Bruto Mensal x 12.</p>
+            </div>
+          </div>
+          <!--
+          <div class="form__group">
+            <label>
+              <input id="toggleOptional" type="checkbox" aria-controls="campoOpcional" />
+              Mostrar campo opcional
+            </label>
+          </div>
+      
+          <div id="campoOpcional" class="optional-field" aria-hidden="true">
+            <div class="form__group">
+              <label for="salarioAnual" class="form__label">Salário Anual (R$)</label>
+              <input type ="number" id="salarioAnual" placeholder="Ex: 180000" disabled />
+            </div>
+          -->
           <!-- Grupo de formulário para Pró-labore -->
           <div class="form__group">
             <div>
               <label for="proLabore" class="form__label">Pró-labore Mínimo Desejado (R$)</label>
-              <input type="number" id="proLabore" placeholder="Ex: 4000 (Obrigatório >= 28% do Salário Bruto)" required class="form__input" value="4000">
+              <input type="number" id="proLabore" placeholder="Ex: 4000 (Obrigatório >= 28% do Salário Bruto)" required class="form__input" value="4000" step="0.01">
               <p id="proLaboreWarning" class="form__warning"></p>
               <p class="form__tip">Usado para cálculo de INSS Pessoa Jurídica. Deve ser >= 28% do Faturamento PJ.</p>
             </div>
@@ -276,8 +304,8 @@
 
 
 
-
-      <!-- Seção "Sobre Nós" -->
+<!--
+      
       <section id="sobre" class="card hidden">
         <h2 class="section__title"><i data-lucide="info" class="icon"></i> Sobre o CodeConta</h2>
         <p class="section__description">O CodeConta é a sua ferramenta essencial para desenvolvedores que buscam clareza na escolha do regime tributário. Compare de forma simples e rápida as opções CLT, Simples Nacional (Anexos III e V) e Lucro Presumido, e visualize o impacto direto na sua remuneração líquida. Nosso objetivo é empoderar você com informações precisas para as melhores decisões financeiras e tributárias.</p>
@@ -299,7 +327,7 @@
         <p class="section__tip">Lembre-se: este simulador não substitui a consulta a um contador. Use-o como um ponto de partida para seu planejamento financeiro e tributário.</p>
       </section>
 
-      <!-- Seção "Contato e Feedback" -->
+      
       <section id="contato" class="card hidden">
         <h2 class="section__title"><i data-lucide="mail" class="icon"></i> Contato e Feedback</h2>
         <p class="section__description">Tem alguma dúvida, sugestão de melhoria ou notou um erro nos cálculos? Adoraríamos ouvir você! O feedback nos ajuda a manter a ferramenta atualizada e útil.</p>
@@ -308,7 +336,7 @@
       </section>
     </div>
   </main>
-
+-->
   <!-- Scripts: Importação dos arquivos JavaScript modularizados -->
   <script src="src/js/features/simulator/constants.js"></script>
   <script src="src/js/features/simulator/helpers.js"></script>

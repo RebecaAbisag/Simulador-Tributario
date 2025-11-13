@@ -5,6 +5,7 @@
 function handleSimulation() {
   // Obtém os valores dos inputs
   const salarioBruto = parseFloat(document.getElementById('salarioBruto').value) || 0;
+  const salarioAnual = parseFloat(document.getElementById('salarioAnual').value) || 0
   const proLaboreInput = parseFloat(document.getElementById('proLabore').value) || 0;
   const issRate = parseFloat(document.getElementById('municipioISS').value) || 5;
   const rendaExterior = parseFloat(document.getElementById('rendaExterior').value) || 0;
