@@ -5,13 +5,16 @@
 function handleSimulation() {
   // Obtém os valores dos inputs
   const salarioBruto = parseFloat(document.getElementById('salarioBruto').value) || 0;
-  const salarioAnual = parseFloat(document.getElementById('salarioAnual').value) || 0
+  const salarioAnual = parseFloat(document.getElementById('salarioAnual').value) || salarioBruto * 12;
   const proLaboreInput = parseFloat(document.getElementById('proLabore').value) || 0;
   const issRate = parseFloat(document.getElementById('municipioISS').value) || 5;
   const rendaExterior = parseFloat(document.getElementById('rendaExterior').value) || 0;
 
   // Se o salário bruto for zero ou negativo, oculta a seção de resultados
-  if (salarioBruto <= 0) {
+  if (salarioBruto < 0 || rendaExterior < 0) {
+    return;
+  }
+  if (salarioAnual <=0) {
     return;
   }
 
