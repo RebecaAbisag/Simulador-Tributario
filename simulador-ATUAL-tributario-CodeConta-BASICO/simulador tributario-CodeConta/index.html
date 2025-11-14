@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CodeConta: Simulador Tributário CLT vs PJ</title>
 
   <!-- Lucide icons (CDN): Biblioteca de ícones para uso em toda a aplicação -->
@@ -12,6 +13,7 @@
   <link rel="stylesheet" href="src/css/style.css">
 
 </head>
+
 <body>
 
   <!-- Navbar: Barra de navegação principal do site -->
@@ -53,9 +55,10 @@
   </nav>
 
   <!-- Header: Seção de cabeçalho com título e subtítulo -->
-  <header class="header hidden">
+  <header class="header ">
     <h1 class="header__title">Simulador Tributário para Desenvolvedores</h1>
-    <p class="header__subtitle">Descubra o regime tributário ideal para desenvolvedores: compare CLT, Simples Nacional (Anexos III & V) e Lucro Presumido para maximizar seu líquido.</p>
+    <p class="header__subtitle">Descubra o regime tributário ideal para sua empresa: Simples Nacional (Anexos III & V) e
+      Lucro Presumido.</p>
   </header>
 
   <!-- Main: Conteúdo principal da página -->
@@ -69,9 +72,10 @@
           <!-- Grupo de formulário para Salário Bruto -->
           <div class="form__group">
             <div>
-              <label for="salarioBruto" class="form__label">Salário Bruto Mensal / Faturamento PJ (R$)</label>
-              <input type="number" id="salarioBruto" placeholder="Ex: 15000" required class="form__input" value="10000" step="0.01">
-              <p class="form__tip">Valor base a ser comparado nos três regimes.</p>
+              <label for="salarioBruto" class="form__label"> Faturamento do Brasil (R$)</label>
+              <input type="number" id="salarioBruto" placeholder="Ex: 15000" required class="form__input" value="10000"
+                step="0.01">
+              <p class="form__tip">Valor da renda obtida para prestação de serviço Brasil.</p>
             </div>
           </div>
           <!-- CheckBox -->
@@ -88,23 +92,24 @@
               <p class="form__tip">Valor opcional se não preenchido será utilizado o Salário Bruto Mensal x 12.</p>
             </div>
           </div>
-          
+
           <!-- Grupo de formulário para Pró-labore -->
           <div class="form__group">
             <div>
               <label for="proLabore" class="form__label">Gastos com Folha e Pró-labore (R$)</label>
-              <input type="number" id="proLabore" placeholder="Ex: 4000 (Obrigatório >= 28% do Salário Bruto)" required class="form__input" value="4000" step="0.01">
+              <input type="number" id="proLabore" placeholder="Ex: 4000 (Obrigatório >= 28% do Salário Bruto)" required
+                class="form__input" value="4000" step="0.01">
               <p id="proLaboreWarning" class="form__warning"></p>
-              <p class="form__tip">Usado para cálculo de INSS Pessoa Jurídica. Deve ser >= 28% do Faturamento PJ.</p>
+              <p class="form__tip">Usado para cálculo do fator R.</p>
             </div>
           </div>
 
           <!-- Novo Grupo de formulário para Renda Fora do Brasil -->
           <div class="form__group">
             <div>
-              <label for="rendaExterior" class="form__label">Renda Fora do Brasil (R$)</label>
+              <label for="rendaExterior" class="form__label">Faturamento Renda do Exterior (R$)</label>
               <input type="number" id="rendaExterior" placeholder="Ex: 2000" class="form__input" value="0">
-              <p class="form__tip">Valor da renda obtida fora do Brasil, se aplicável.</p>
+              <p class="form__tip">Valor da renda obtida para prestação de serviço no exterior.</p>
             </div>
           </div>
 
@@ -136,7 +141,8 @@
         <div id="bestOptionHighlight" class="card card--highlight">
           <h3 class="card__title">OPÇÃO RECOMENDADA: <span id="bestOptionName">...</span></h3>
           <p class="card__value"><span id="bestOptionValue" class="text-liquid">R$ 0,00</span> Líquido</p>
-          <p class="card__savings">Economia estimada de <span id="comparisonSavings">R$ 0,00</span> por mês em comparação com a MEI.</p>
+          <p class="card__savings">Economia estimada de <span id="comparisonSavings">R$ 0,00</span> por mês em
+            comparação com a MEI.</p>
 
         </div>
 
@@ -144,14 +150,16 @@
         <div class="comparison">
           <!-- Card MEI -->
           <div id="meiCard" class="card card--comparison">
-            <h3 class="card__title card__title--mei"><i data-lucide="user" class="icon"></i> MEI (Microempreendedor Individual)</h3>
+            <h3 class="card__title card__title--mei"><i data-lucide="user" class="icon"></i> MEI (Microempreendedor
+              Individual)</h3>
             <p class="card__description">Regime simplificado para faturamento até R$ 81.000/ano.</p>
             <div class="card__details">
               <div>DAS-MEI: <span id="meiDAS" class="text-tax">R$ 0,00</span></div>
               <div>Total Impostos: <span id="meiTotalImpostos" class="text-tax">R$ 0,00</span></div>
               <div>LÍQUIDO: <span id="meiLiquido" class="text-liquid">R$ 0,00</span></div>
             </div>
-            <button class="btn btn--secondary btn--small toggle-details-btn" data-target="meiDetails">Saber mais</button>
+            <button class="btn btn--secondary btn--small toggle-details-btn" data-target="meiDetails">Saber
+              mais</button>
             <div id="meiDetails" class="details-container hidden">
               <h4>Detalhes MEI:</h4>
               <table class="details-table">
@@ -184,7 +192,8 @@
 
           <!-- Card PJ - Simples Nacional (Melhor entre Anexo III e V) -->
           <div id="pjSimplesCard" class="card card--comparison">
-            <h3 class="card__title card__title--pj-simples"><i data-lucide="package" class="icon"></i> PJ - Simples Nacional</h3>
+            <h3 class="card__title card__title--pj-simples"><i data-lucide="package" class="icon"></i> PJ - Simples
+              Nacional</h3>
             <p class="card__description">Melhor opção entre Anexo III e V, considerando o Fator R.</p>
             <div class="card__details">
               <div>DAS (Efetivo): <span id="pjSimplesDAS" class="text-tax">R$ 0,00</span></div>
@@ -192,7 +201,8 @@
               <div>Total Impostos: <span id="pjSimplesTotalImpostos" class="text-tax">R$ 0,00</span></div>
               <div class="card__liquid">LÍQUIDO: <span id="pjSimplesLiquido" class="text-liquid">R$ 0,00</span></div>
             </div>
-            <button class="btn btn--secondary btn--small toggle-details-btn" data-target="pjSimplesDetails">Saber mais</button>
+            <button class="btn btn--secondary btn--small toggle-details-btn" data-target="pjSimplesDetails">Saber
+              mais</button>
             <div id="pjSimplesDetails" class="details-container hidden">
               <h4>Detalhes Simples Nacional:</h4>
               <table class="details-table">
@@ -225,7 +235,8 @@
 
           <!-- Card PJ - Lucro Presumido -->
           <div id="lucroPresumidoCard" class="card card--comparison">
-            <h3 class="card__title card__title--lucro-presumido"><i data-lucide="layers" class="icon"></i> PJ - Lucro Presumido</h3>
+            <h3 class="card__title card__title--lucro-presumido"><i data-lucide="layers" class="icon"></i> PJ - Lucro
+              Presumido</h3>
             <p class="card__description">Regime para faturamentos mais altos, com impostos sobre lucro presumido.</p>
             <div class="card__details">
               <div>IRPJ/CSLL: <span id="lpIRPJCSLL" class="text-tax">R$ 0,00</span></div>
@@ -279,8 +290,13 @@
         </div>
 
         <!-- Aviso legal e disclaimer -->
-        <p class="results__disclaimer">*ESTE SIMULADOR É APENAS PARA FINS INFORMATIVOS e utiliza dados aproximados de 2024/2025. Alíquotas e regras podem mudar. Consulte sempre um contador profissional para cálculos exatos e planejamento tributário adequado ao seu negócio.</p>
-        <p class="results__disclaimer">**Atenção:** A "Renda Fora do Brasil" é adicionada diretamente ao valor líquido final dos regimes PJ, pois não é sujeita a PIS/COFINS no Simples Nacional. Outros impostos sobre essa renda podem ser aplicáveis dependendo da legislação específica do país de origem e acordos internacionais.</p>
+        <p class="results__disclaimer">*Este simulador tem caráter meramente informativo e utiliza dados baseados na
+          legislação vigente.
+          As alíquotas e regras tributárias podem sofrer alterações.
+          Recomenda-se consultar um contador para obter cálculos precisos e um planejamento tributário adequado para sua
+          empresa.</p>
+        <p class="results__disclaimer">**Atenção:** A "Renda Fora do Brasil" é isenta de Pis e Cofins nos dois regimes
+          tributários.</p>
       </div>
     </div>
 
@@ -291,7 +307,7 @@
 
 
 
-<!--
+      <!--
       
       <section id="sobre" class="card hidden">
         <h2 class="section__title"><i data-lucide="info" class="icon"></i> Sobre o CodeConta</h2>
@@ -324,26 +340,26 @@
     </div>
   </main>
 -->
-  <!-- Scripts: Importação dos arquivos JavaScript modularizados -->
-  <script src="src/js/features/simulator/constants.js"></script>
-  <script src="src/js/features/simulator/helpers.js"></script>
-  <script src="src/js/features/simulator/calculator.js"></script>
-  <script src="src/js/features/simulator/simulator.js"></script>
+      <!-- Scripts: Importação dos arquivos JavaScript modularizados -->
+      <script src="src/js/features/simulator/constants.js"></script>
+      <script src="src/js/features/simulator/helpers.js"></script>
+      <script src="src/js/features/simulator/calculator.js"></script>
+      <script src="src/js/features/simulator/simulator.js"></script>
 
-  <script src="src/js/ui/ui.js"></script>
-  <script src="src/js/ui/navigation.js"></script>
-  <script src="src/js/core/theme.js"></script>
-  <script src="src/js/core/events.js"></script>
-  <script src="src/js/core/main.js"></script>
+      <script src="src/js/ui/ui.js"></script>
+      <script src="src/js/ui/navigation.js"></script>
+      <script src="src/js/core/theme.js"></script>
+      <script src="src/js/core/events.js"></script>
+      <script src="src/js/core/main.js"></script>
 
-  <script>
-    // Inicializa os ícones Lucide após o carregamento do DOM
-    document.addEventListener('DOMContentLoaded', () => {
-      if (window.lucide) lucide.createIcons();
-    });
-  </script>
+      <script>
+        // Inicializa os ícones Lucide após o carregamento do DOM
+        document.addEventListener('DOMContentLoaded', () => {
+          if (window.lucide) lucide.createIcons();
+        });
+      </script>
 
 
 </body>
-</html>
 
+</html>
