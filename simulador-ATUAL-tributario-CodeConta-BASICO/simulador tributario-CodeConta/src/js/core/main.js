@@ -19,14 +19,32 @@ document.addEventListener("DOMContentLoaded", () => {
     return (Number(v) || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
   }
 
-  function showError(msg) {
+  function showGlobalError(msg) {
     errorBox.textContent = msg;
     errorBox.classList.remove("hidden");
   }
 
-  function clearError() {
+  function hideGlobalError() {
     errorBox.textContent = "";
     errorBox.classList.add("hidden");
+  }
+
+  function setFieldError(input, msg, ms = 2000) {
+    if (!input) {
+      showGlobalError(msg);
+      return;
+    }
+    input.setCustomValidity(msg);
+    input.reportValidity();
+    setTimeout(() => {
+      input.setCustomValidity("");
+    }, ms);
+  }
+
+  function clearAllFieldValidity() {
+    const inputs = form.querySelectorAll("input, select, textarea");
+    inputs.forEach(i => i.setCustomValidity(""));
+    hideGlobalError();
   }
 
   function temValorNegativo(...vals) {
@@ -142,26 +160,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    clearError();
+    clearAllFieldValidity();
 
     const salarioBruto = parseFloat(salarioBrutoInput.value) || 0;
     const rendaExterior = parseFloat(rendaExteriorInput.value) || 0;
     const proLabore = parseFloat(proLaboreInput.value) || 0;
-    const salarioAnualRaw = salarioAnualInput.value.trim();
-    const salarioAnualInformado = salarioAnualRaw !== "" ? parseFloat(salarioAnualRaw) || 0 : null;
+    let salarioAnualInformado = null;
 
-    if (temValorNegativo(salarioBruto, rendaExterior, proLabore, salarioAnualInformado ?? 0)) {
-      showError("⚠️ Nenhum valor pode ser negativo. Corrija antes de continuar.");
+    if (checkboxOpcional.checked) {
+      const salarioAnualRaw = salarioAnualInput.value.trim();
+      salarioAnualInformado = salarioAnualRaw !== "" ? parseFloat(salarioAnualRaw) || 0 : null;
+    }
+
+    if (salarioBruto < 0) {
+      setFieldError(salarioBrutoInput, "⚠️ Nenhum valor pode ser negativo. Corrija antes de continuar.");
+      return;
+    }
+    if (rendaExterior < 0) {
+      setFieldError(rendaExteriorInput, "⚠️ Nenhum valor pode ser negativo. Corrija antes de continuar.");
+      return;
+    }
+    if (proLabore < 0) {
+      setFieldError(proLaboreInput, "⚠️ Nenhum valor pode ser negativo. Corrija antes de continuar.");
+      return;
+    }
+    if (checkboxOpcional.checked && salarioAnualInformado !== null && salarioAnualInformado < 0) {
+      setFieldError(salarioAnualInput, "⚠️ Nenhum valor pode ser negativo. Corrija antes de continuar.");
       return;
     }
 
     if (salarioBruto <= 0 && rendaExterior <= 0) {
-      showError("⚠️ É necessário informar pelo menos um tipo de salário (bruto ou renda do exterior).");
+      setFieldError(salarioBrutoInput, "⚠️ Informe pelo menos um salário (bruto ou renda do exterior).");
+      setTimeout(() => {
+        setFieldError(rendaExteriorInput, "⚠️ Informe pelo menos um salário (bruto ou renda do exterior).");
+      }, 300);
+      return;
+    }
+
+    if (checkboxOpcional.checked && (salarioAnualInformado === null || salarioAnualInformado <= 0)) {
+      setFieldError(salarioAnualInput, "⚠️ O campo Salário Anual está ativo — preencha um valor maior que zero ou desative o campo opcional.");
       return;
     }
 
     let salarioAnualFinal;
-    if (salarioAnualInformado !== null && salarioAnualInformado > 0) {
+    if (checkboxOpcional.checked && salarioAnualInformado !== null && salarioAnualInformado > 0) {
       salarioAnualFinal = salarioAnualInformado;
     } else {
       const positivos = [salarioBruto, rendaExterior].filter(v => v > 0);
@@ -258,7 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
     form.reset();
     campoOpcional.classList.add("hidden");
     proLaboreWarning.textContent = "";
-    clearError();
+    clearAllFieldValidity();
     document.querySelectorAll(".text-tax, .text-liquid").forEach(el => el.textContent = "R$ 0,00");
     const bestOptionName = document.getElementById("bestOptionName");
     const bestOptionValue = document.getElementById("bestOptionValue");
