@@ -74,13 +74,11 @@ function handleSimulation() {
   document.getElementById('meiLiquido').textContent = formatBRL(resultMEI.liquido);
 
   document.getElementById('pjSimplesDAS').textContent = formatBRL(resultSimplesNacional.das);
-  document.getElementById('pjSimplesINSS').textContent = formatBRL(resultSimplesNacional.inss);
   document.getElementById('pjSimplesTotalImpostos').textContent = formatBRL(resultSimplesNacional.totalImpostos);
   document.getElementById('pjSimplesLiquido').textContent = formatBRL(resultSimplesNacional.liquido);
 
   document.getElementById('lpIRPJCSLL').textContent = formatBRL(resultLucroPresumido.irpjcsll);
   document.getElementById('lpPISCOFINS').textContent = formatBRL(resultLucroPresumido.pisCofins);
-  document.getElementById('lpINSS').textContent = formatBRL(resultLucroPresumido.inss);
   document.getElementById('lpTotalImpostos').textContent = formatBRL(resultLucroPresumido.totalImpostos);
   document.getElementById('lpLiquido').textContent = formatBRL(resultLucroPresumido.liquido);
 
@@ -94,8 +92,6 @@ function handleSimulation() {
   // Simples Nacional
   document.getElementById('pjSimplesDetailsAliquota').textContent = `${resultSimplesNacional.efetiva.toFixed(2)}%`;
   document.getElementById('pjSimplesDetailsDAS').textContent = formatBRL(resultSimplesNacional.das);
-  document.getElementById('pjSimplesDetailsINSS').textContent = formatBRL(resultSimplesNacional.inss);
-  document.getElementById('pjSimplesDetailsIRPF').textContent = formatBRL(resultSimplesNacional.irpf);
   document.getElementById('pjSimplesDetailsLiquido').textContent = formatBRL(resultSimplesNacional.liquido);
 
   // Lucro Presumido
@@ -103,9 +99,9 @@ function handleSimulation() {
   document.getElementById('lpDetailsCSLL').textContent = formatBRL(resultLucroPresumido.csll);
   document.getElementById('lpDetailsPIS').textContent = formatBRL(resultLucroPresumido.pis);
   document.getElementById('lpDetailsCOFINS').textContent = formatBRL(resultLucroPresumido.cofins);
-  document.getElementById('lpDetailsISS').textContent = formatBRL(resultLucroPresumido.iss);
-  document.getElementById('lpDetailsINSS').textContent = formatBRL(resultLucroPresumido.inss);
-  document.getElementById('lpDetailsIRPF').textContent = formatBRL(resultLucroPresumido.irpf);
+  const valorISSFormatado = formatBRL(resultLucroPresumido.iss);
+  document.getElementById('lpDetailsISS').textContent = valorISSFormatado;
+  document.getElementById('lpSaberMaisISS').textContent = valorISSFormatado;
   document.getElementById('lpDetailsLiquido').textContent = formatBRL(resultLucroPresumido.liquido);
 
 

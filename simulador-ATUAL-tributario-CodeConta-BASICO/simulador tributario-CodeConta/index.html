@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -197,7 +198,6 @@
             <p class="card__description">Melhor opção entre Anexo III e V, considerando o Fator R.</p>
             <div class="card__details">
               <div>DAS (Efetivo): <span id="pjSimplesDAS" class="text-tax">R$ 0,00</span></div>
-              <div>INSS (Pró-labore): <span id="pjSimplesINSS" class="text-tax">R$ 0,00</span></div>
               <div>Total Impostos: <span id="pjSimplesTotalImpostos" class="text-tax">R$ 0,00</span></div>
               <div class="card__liquid">LÍQUIDO: <span id="pjSimplesLiquido" class="text-liquid">R$ 0,00</span></div>
             </div>
@@ -213,14 +213,6 @@
                 <tr>
                   <td>DAS:</td>
                   <td id="pjSimplesDetailsDAS" class="text-tax">R$ 0,00</td>
-                </tr>
-                <tr>
-                  <td>INSS (Pró-labore):</td>
-                  <td id="pjSimplesDetailsINSS" class="text-tax">R$ 0,00</td>
-                </tr>
-                <tr>
-                  <td>IRPF (Pró-labore):</td>
-                  <td id="pjSimplesDetailsIRPF" class="text-tax">R$ 0,00</td>
                 </tr>
                 <tr>
                   <td>Líquido Final:</td>
@@ -240,8 +232,8 @@
             <p class="card__description">Regime para faturamentos mais altos, com impostos sobre lucro presumido.</p>
             <div class="card__details">
               <div>IRPJ/CSLL: <span id="lpIRPJCSLL" class="text-tax">R$ 0,00</span></div>
+              <div>ISS: <span id="lpDetailsISS" class="text-tax">R$ 0,00</span></div>
               <div>PIS/COFINS: <span id="lpPISCOFINS" class="text-tax">R$ 0,00</span></div>
-              <div>INSS (Pró-labore): <span id="lpINSS" class="text-tax">R$ 0,00</span></div>
               <div>Total Impostos: <span id="lpTotalImpostos" class="text-tax">R$ 0,00</span></div>
               <div class="card__liquid">LÍQUIDO: <span id="lpLiquido" class="text-liquid">R$ 0,00</span></div>
             </div>
@@ -267,15 +259,7 @@
                 </tr>
                 <tr>
                   <td>ISS:</td>
-                  <td id="lpDetailsISS" class="text-tax">R$ 0,00</td>
-                </tr>
-                <tr>
-                  <td>INSS (Pró-labore):</td>
-                  <td id="lpDetailsINSS" class="text-tax">R$ 0,00</td>
-                </tr>
-                <tr>
-                  <td>IRPF (Pró-labore):</td>
-                  <td id="lpDetailsIRPF" class="text-tax">R$ 0,00</td>
+                  <td id="lpSaberMaisISS" class="text-tax">R$ 0,00</td>
                 </tr>
                 <tr>
                   <td>Líquido Final:</td>
@@ -307,7 +291,7 @@
 
 
 
-      <!--
+      <!--  
       
       <section id="sobre" class="card hidden">
         <h2 class="section__title"><i data-lucide="info" class="icon"></i> Sobre o CodeConta</h2>

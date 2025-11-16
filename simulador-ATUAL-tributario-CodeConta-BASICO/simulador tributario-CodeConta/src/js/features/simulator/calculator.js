@@ -49,8 +49,8 @@ function calculateSimplesNacional(bruto, proLabore, issRate, rendaExterior) {
     }
     irpf = Math.max(0, irpf); // Garante que o IRPF não seja negativo
 
-    let liquido = bruto - das - inssProLabore - irpf + rendaExterior;
-    const totalImpostos = das + inssProLabore + irpf;
+    let liquido = bruto - das + rendaExterior;
+    const totalImpostos = das;
     return { das, inss: inssProLabore, irpf, liquido, totalImpostos, efetiva: aliquotaEfetiva * 100 };
   };
 
@@ -100,7 +100,7 @@ function calculateLucroPresumido(bruto, proLabore, issRate, rendaExterior) {
   }
   irpfProLabore = Math.max(0, irpfProLabore);
 
-  const totalImpostos = irpj + csll + pis + cofins + iss + inssProLabore + irpfProLabore;
+  const totalImpostos = irpj + csll + pis + cofins + iss;
   const liquido = bruto - totalImpostos + rendaExterior;
 
   return { irpj, csll, pis, cofins, iss, inss: inssProLabore, irpf: irpfProLabore, liquido, totalImpostos, irpjcsll: irpj + csll, pisCofins: pis + cofins };
