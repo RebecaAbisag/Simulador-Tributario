@@ -1,0 +1,31 @@
+/* src/css/components/_floating-button.css */
+.floating-ai-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #6200ea; /* Um tom de roxo para "IA" */
+  color: white;
+  padding: 15px 20px;
+  border-radius: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  z-index: 1000; /* Garante que fique acima de outros elementos */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.floating-ai-button:hover {
+  background-color: #7c4dff; /* Tom mais claro no hover */
+  transform: translateY(-3px);
+}
+
+/* Opcional: Adicionar um ícone de IA se houver uma biblioteca de ícones disponível */
+.floating-ai-button::before {
+  content: '🤖'; /* Exemplo de ícone unicode, pode ser substituído por um ícone de biblioteca */
+  margin-right: 8px;
+  font-size: 1.2em;
+}

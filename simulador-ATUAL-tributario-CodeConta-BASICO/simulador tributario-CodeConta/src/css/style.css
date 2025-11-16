@@ -8,6 +8,7 @@
 @import url('./components/_chat.css');
 @import url('./components/_floating-elements.css');
 @import url('./components/_accountant-cards.css');
+@import url('./components/_floating-button.css');
 
 /* Layout specific imports */
 @import url('./layout/_nav.css');
