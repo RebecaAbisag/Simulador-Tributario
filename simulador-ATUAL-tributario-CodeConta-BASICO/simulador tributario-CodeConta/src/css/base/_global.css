@@ -12,15 +12,16 @@ input[type="number"], select, textarea {
     background-color: var(--bg-tertiary);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
-    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s, box-shadow 0.3s;
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.75rem 1rem;
     border-radius: 1.5rem;
-    font-size: 1.125rem;
+    font-size: 1rem;
 }
 
 /* Estilos de foco para inputs, selects e textareas */
 input[type="number"]:focus, select:focus, textarea:focus {
+    outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(251,191,36,0.5);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 30%, transparent);
 }

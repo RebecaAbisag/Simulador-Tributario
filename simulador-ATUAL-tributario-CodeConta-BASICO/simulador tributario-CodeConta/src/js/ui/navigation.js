@@ -60,6 +60,11 @@ function initializeNavigation() {
       if (icon) icon.setAttribute('data-lucide', 'menu');
       if (window.lucide) lucide.createIcons();
     }
+
+    // Refresh Lucide icons
+    if (window.lucide) {
+      lucide.createIcons();
+    }
   }
 
   // Add event listeners to navigation links

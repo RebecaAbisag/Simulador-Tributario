@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  initializeNavigation();
   const form = document.getElementById("calculatorForm");
   const checkboxOpcional = document.getElementById("mostrarOpcional");
   const campoOpcional = document.getElementById("campoOpcional");

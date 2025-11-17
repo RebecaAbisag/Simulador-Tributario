@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Exibe a mensagem de boas-vindas do chat
     if (typeof displayChatMessage === 'function') {
-      displayChatMessage("Olá! Eu sou seu Assistente IA offline do CodeConta. Pergunte sobre CLT, PJ, Anexo III ou Anexo V.", 'ai');
+      displayChatMessage("Olá! Eu sou seu Assistente IA offline do DevPJ. Pergunte sobre CLT, PJ, Anexo III ou Anexo V.", 'ai');
     } else if (typeof initializeChat === 'function') {
       // Fallback para o caso de a função de chat ter um nome diferente
       initializeChat();

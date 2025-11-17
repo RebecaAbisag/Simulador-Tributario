@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CodeConta: Simulador Tributário CLT vs PJ</title>
+  <title>DevPJ: Simulador Tributário CLT vs PJ</title>
 
   <!-- Lucide icons (CDN): Biblioteca de ícones para uso em toda a aplicação -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -31,8 +31,8 @@
         <a href="#" class="navbar__link" data-section="simulator-section">Simulador</a>
 
 
-        <a href="#sobre" class="navbar__link" data-section="sobre">Sobre Nós</a>
-        <a href="#contato" class="navbar__link" data-section="contato">Contato</a>
+        <a href="#sobre" class="navbar__link" data-section="sobre">Sobre o DevPJ</a>
+        <a href="#contato" class="navbar__link" data-section="contato">Contato DevPJ</a>
       </div>
       <!-- Botão para alternar o tema (claro/escuro/limpo) -->
       <button id="theme-toggle" class="navbar__theme-toggle">
@@ -50,8 +50,8 @@
       <a href="#" class="navbar__mobile-link navbar__mobile-link--active" data-section="simulator-section">Simulador</a>
 
 
-      <a href="#sobre" class="navbar__mobile-link" data-section="sobre">Sobre Nós</a>
-      <a href="#contato" class="navbar__mobile-link" data-section="contato">Contato</a>
+      <a href="#sobre" class="navbar__mobile-link" data-section="sobre">Sobre o DevPJ</a>
+      <a href="#contato" class="navbar__mobile-link" data-section="contato">Contato DevPJ</a>
     </div>
   </nav>
 
@@ -286,16 +286,9 @@
 
     <!-- Seções adicionais da página (Sobre, Contato) -->
     <div class="sections">
-
-
-
-
-
-      <!--  
-      
       <section id="sobre" class="card hidden">
-        <h2 class="section__title"><i data-lucide="info" class="icon"></i> Sobre o CodeConta</h2>
-        <p class="section__description">O CodeConta é a sua ferramenta essencial para desenvolvedores que buscam clareza na escolha do regime tributário. Compare de forma simples e rápida as opções CLT, Simples Nacional (Anexos III e V) e Lucro Presumido, e visualize o impacto direto na sua remuneração líquida. Nosso objetivo é empoderar você com informações precisas para as melhores decisões financeiras e tributárias.</p>
+        <h2 class="section__title"><i data-lucide="info" class="icon"></i> Sobre o DevPJ</h2>
+        <p class="section__description">O DevPJ é a sua ferramenta essencial para desenvolvedores que buscam clareza na escolha do regime tributário. Compare de forma simples e rápida as opções CLT, Simples Nacional (Anexos III e V) e Lucro Presumido, e visualize o impacto direto na sua remuneração líquida. Nosso objetivo é empoderar você com informações precisas para as melhores decisões financeiras e tributárias.</p>
         
         <div class="video-container" style="margin-top: 2rem; margin-bottom: 2rem;">
           <h3 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 1rem; text-align: center;">Entenda a Importância do Regime Tributário</h3>
@@ -308,7 +301,7 @@
                       allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowfullscreen
                       style="border-radius: 0.75rem;"
-                    ></iframe>          <p class="section__tip" style="text-align: center; margin-top: 1rem;">Este é um vídeo de exemplo. Você pode substituir o link do YouTube pelo vídeo desejado.</p>
+                    ></iframe>
         </div>
 
         <p class="section__tip">Lembre-se: este simulador não substitui a consulta a um contador. Use-o como um ponto de partida para seu planejamento financeiro e tributário.</p>
@@ -318,12 +311,30 @@
       <section id="contato" class="card hidden">
         <h2 class="section__title"><i data-lucide="mail" class="icon"></i> Contato e Feedback</h2>
         <p class="section__description">Tem alguma dúvida, sugestão de melhoria ou notou um erro nos cálculos? Adoraríamos ouvir você! O feedback nos ajuda a manter a ferramenta atualizada e útil.</p>
-        <a href="mailto:contato@codeconta.com" class="btn btn--primary"><i data-lucide="send" class="icon"></i> Enviar um E-mail</a>
+        
+        <form id="contactForm" class="form">
+          <div class="form__group">
+            <label for="contactName" class="form__label">Nome</label>
+            <input type="text" id="contactName" name="name" class="form__input" placeholder="Seu nome" required>
+          </div>
+          <div class="form__group">
+            <label for="contactEmail" class="form__label">E-mail</label>
+            <input type="email" id="contactEmail" name="email" class="form__input" placeholder="seu.email@exemplo.com" required>
+          </div>
+          <div class="form__group">
+            <label for="contactMessage" class="form__label">Mensagem</label>
+            <textarea id="contactMessage" name="message" class="form__input" rows="4" placeholder="Sua mensagem..." required></textarea>
+          </div>
+          <div class="form__actions">
+            <button type="submit" class="btn btn--primary"><i data-lucide="send" class="icon"></i> Enviar Mensagem</button>
+          </div>
+        </form>
+        
         <p class="section__tip">Este é um projeto fictício, mas sinta-se à vontade para simular o contato.</p>
       </section>
     </div>
   </main>
--->
+
       <!-- Scripts: Importação dos arquivos JavaScript modularizados -->
       <script src="src/js/features/simulator/constants.js"></script>
       <script src="src/js/features/simulator/helpers.js"></script>
