@@ -27,3 +27,58 @@
     font-size: 0.875rem;
     color: var(--text-secondary);
 }
+
+/* Estilos para a seção do contador */
+#accountant-section {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+#accountant-section .section__title {
+    font-size: 1.75rem;
+    color: var(--color-secondary);
+}
+
+#accountant-section .section__description {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+#accountantForm .form__group {
+    margin-bottom: 1.5rem;
+}
+
+#accountantForm .form__label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+#accountantForm .form__input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#accountantForm .form__input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+#accountantForm .form__tip {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+#accountantForm .form__actions {
+    text-align: center;
+    margin-top: 2rem;
+}

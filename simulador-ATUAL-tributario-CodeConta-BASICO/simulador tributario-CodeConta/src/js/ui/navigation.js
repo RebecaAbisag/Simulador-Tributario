@@ -4,7 +4,7 @@
 function initializeNavigation() {
   const navLinks = document.querySelectorAll('.navbar__link, .navbar__mobile-link, .navbar__logo');
   const sections = document.querySelectorAll(
-    '#simulator-section, .floating-chat, #indicacoes, #sou-contador, #sobre, #contato'
+    '#simulator-section, .floating-chat, #indicacoes, #accountant-section, #sobre, #contato'
   );
   const mobileMenu = document.getElementById('mobile-menu');
   const mobileMenuButton = document.getElementById('mobile-menu-button');

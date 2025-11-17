@@ -29,8 +29,7 @@
       <!-- Menu de navegação para desktop -->
       <div class="navbar__menu">
         <a href="#" class="navbar__link" data-section="simulator-section">Simulador</a>
-
-
+        <a href="#" class="navbar__link" data-section="accountant-section">Sou Contador</a>
         <a href="#sobre" class="navbar__link" data-section="sobre">Sobre o DevPJ</a>
         <a href="#contato" class="navbar__link" data-section="contato">Contato DevPJ</a>
       </div>
@@ -48,8 +47,7 @@
     <!-- Menu de navegação para mobile, inicialmente oculto -->
     <div id="mobile-menu" class="navbar__mobile-menu">
       <a href="#" class="navbar__mobile-link navbar__mobile-link--active" data-section="simulator-section">Simulador</a>
-
-
+      <a href="#" class="navbar__mobile-link" data-section="accountant-section">Sou Contador</a>
       <a href="#sobre" class="navbar__mobile-link" data-section="sobre">Sobre o DevPJ</a>
       <a href="#contato" class="navbar__mobile-link" data-section="contato">Contato DevPJ</a>
     </div>
@@ -275,6 +273,46 @@
           tributários.</p>
       </div>
     </div>
+
+    <!-- Seção de Cadastro do Contador -->
+    <section id="accountant-section" class="card hidden">
+      <h2 class="section__title"><i data-lucide="user-check" class="icon"></i> Área do Contador</h2>
+      <p class="section__description">Cadastre-se para ter acesso a recursos exclusivos e ser listado em nossa plataforma.</p>
+      
+      <form id="accountantForm" class="form">
+        <div class="form__group">
+          <label for="accountantName" class="form__label">Nome Completo</label>
+          <input type="text" id="accountantName" name="name" class="form__input" placeholder="Seu nome completo" required>
+        </div>
+        <div class="form__group">
+          <label for="accountantEmail" class="form__label">E-mail Profissional</label>
+          <input type="email" id="accountantEmail" name="email" class="form__input" placeholder="seu.email@contabilidade.com" required>
+        </div>
+        <div class="form__group">
+          <label for="accountantCRC" class="form__label">Número do CRC</label>
+          <input type="text" id="accountantCRC" name="crc" class="form__input" placeholder="Ex: SP-123456/O-7" required>
+        </div>
+        <div class="form__group">
+          <label for="accountantPhone" class="form__label">Telefone/WhatsApp</label>
+          <input type="tel" id="accountantPhone" name="phone" class="form__input" placeholder="(11) 99999-9999" required>
+        </div>
+        <div class="form__group">
+          <label for="accountantSpecialties" class="form__label">Especialidades</label>
+          <input type="text" id="accountantSpecialties" name="specialties" class="form__input" placeholder="Ex: Empresas de TI, Startups, Lucro Real">
+          <p class="form__tip">Separe as especialidades por vírgula.</p>
+        </div>
+        <div class="form__actions">
+          <button type="submit" class="btn btn--primary"><i data-lucide="send" class="icon"></i> Enviar Cadastro</button>
+        </div>
+      </form>
+      
+      <div class="notice-block">
+        <h4 class="notice-block__title"><i data-lucide="info" class="icon"></i> Próximos Passos</h4>
+        <p class="notice-block__text">Ao enviar seu cadastro, um de nossos atendentes entrará em contato para validar seus dados e concluir sua inscrição. Após a aprovação, seu perfil de contador será indicado em nossa plataforma, conectando você a novos clientes!</p>
+      </div>
+
+      <p class="section__tip">Seu cadastro será analisado e, se aprovado, você fará parte de nossa rede de contadores parceiros.</p>
+    </section>
 
     <!-- Seções adicionais da página (Sobre, Contato) -->
     <div class="sections">
