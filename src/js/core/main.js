@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   initializeNavigation();
+
   const form = document.getElementById("calculatorForm");
   const checkboxOpcional = document.getElementById("mostrarOpcional");
   const campoOpcional = document.getElementById("campoOpcional");
@@ -24,22 +25,16 @@ document.addEventListener("DOMContentLoaded", () => {
     errorBox.textContent = msg;
     errorBox.classList.remove("hidden");
   }
-
   function hideGlobalError() {
     errorBox.textContent = "";
     errorBox.classList.add("hidden");
   }
 
   function setFieldError(input, msg, ms = 2000) {
-    if (!input) {
-      showGlobalError(msg);
-      return;
-    }
+    if (!input) { showGlobalError(msg); return; }
     input.setCustomValidity(msg);
     input.reportValidity();
-    setTimeout(() => {
-      input.setCustomValidity("");
-    }, ms);
+    setTimeout(() => input.setCustomValidity(""), ms);
   }
 
   function clearAllFieldValidity() {
@@ -128,27 +123,30 @@ document.addEventListener("DOMContentLoaded", () => {
     return ((faturamentoAnual * faixa.aliquota - faixa.deducao) / faturamentoAnual);
   }
 
-  // MEI: recebe faturamento doméstico e faturamento exterior separadamente.
-  function calcularMEI(faturamentoDomesticoMensal, faturamentoExteriorMensal) {
+  function calcularMEI(faturamentoDomesticoMensal, faturamentoExteriorMensal, faturamentoAnualTotal) {
     const rd = faturamentoDomesticoMensal || 0;
     const re = faturamentoExteriorMensal || 0;
-    const totalFaturamento = rd + re;
-    const DAS = 70.6; // valor aproximado mensal do DAS-MEI
+    const totalFaturamentoMensal = rd + re;
+    const totalAnual = faturamentoAnualTotal || totalFaturamentoMensal * 12;
+
+    const excedeu = totalAnual >= 81000;
+    if (excedeu) {
+      return { excedeu: true, DAS: 0, totalImpostos: 0, liquido: 0 };
+    }
+
+    const DAS = 70.6;
     const totalImpostos = DAS;
-    const liquido = totalFaturamento - totalImpostos;
-    return { DAS, totalImpostos, liquido };
+    const liquido = totalFaturamentoMensal - totalImpostos;
+    return { excedeu: false, DAS, totalImpostos, liquido };
   }
 
-  // Simples: usa faturamento anual total para faixa e fator R,
-  // aplica aliquotaEfetiva sobre doméstico, e remove PIS/COFINS da parcela externa
   function calcularSimples(faturamentoAnualTotal, faturamentoDomesticoMensal, faturamentoExteriorMensal, proLabore) {
     const proLaboreAnual = (proLabore || 0) * 12;
     const fatorR = faturamentoAnualTotal > 0 ? proLaboreAnual / faturamentoAnualTotal : 0;
     const anexoKey = fatorR >= 0.28 ? "III" : "V";
     const aliquotaEfetiva = calcularAliquotaEfetiva(faturamentoAnualTotal, anexoKey);
 
-    const pisCofinsRate = 0.0065 + 0.03; // 0.0365 combinado
-
+    const pisCofinsRate = 0.0065 + 0.03;
     const rd = faturamentoDomesticoMensal || 0;
     const re = faturamentoExteriorMensal || 0;
 
@@ -157,13 +155,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const dasExterno = re * aliquotaExternaAplicavel;
 
     const dasMensal = dasDomestico + dasExterno;
-    const totalImpostos = dasMensal; // neste modelo simplificado consideramos só DAS
+    const totalImpostos = dasMensal;
     const liquido = rd + re - totalImpostos;
 
     return { anexo: anexoKey, fatorR, aliquotaEfetiva, dasMensal, totalImpostos, liquido };
   }
 
-  // Lucro Presumido: IRPJ/CSLL sobre base presumida (total), PIS/COFINS só sobre doméstico, ISS sobre total
   function calcularLucroPresumido(faturamentoDomesticoMensal, faturamentoExteriorMensal, aliquotaISS) {
     const rd = faturamentoDomesticoMensal || 0;
     const re = faturamentoExteriorMensal || 0;
@@ -189,43 +186,31 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     clearAllFieldValidity();
 
-    const salarioBruto = parseFloat(salarioBrutoInput.value) || 0;
-    const rendaExterior = parseFloat(rendaExteriorInput.value) || 0;
+    const salarioBruto = parseFloat(salarioBrutoInput.value) || 0; // rd mensal
+    const rendaExterior = parseFloat(rendaExteriorInput.value) || 0; // re mensal
     const proLabore = parseFloat(proLaboreInput.value) || 0;
     let salarioAnualInformado = null;
 
     if (checkboxOpcional.checked) {
-      const salarioAnualRaw = salarioAnualInput.value.trim();
+      const salarioAnualRaw = (salarioAnualInput.value || "").toString().trim();
       salarioAnualInformado = salarioAnualRaw !== "" ? parseFloat(salarioAnualRaw) || 0 : null;
     }
 
-    if (salarioBruto < 0) {
-      setFieldError(salarioBrutoInput, "⚠️ Nenhum valor pode ser negativo. Corrija antes de continuar.");
-      return;
-    }
-    if (rendaExterior < 0) {
-      setFieldError(rendaExteriorInput, "⚠️ Nenhum valor pode ser negativo. Corrija antes de continuar.");
-      return;
-    }
-    if (proLabore < 0) {
-      setFieldError(proLaboreInput, "⚠️ Nenhum valor pode ser negativo. Corrija antes de continuar.");
-      return;
-    }
+    if (salarioBruto < 0) { setFieldError(salarioBrutoInput, "⚠️ Nenhum valor pode ser negativo."); return; }
+    if (rendaExterior < 0) { setFieldError(rendaExteriorInput, "⚠️ Nenhum valor pode ser negativo."); return; }
+    if (proLabore < 0) { setFieldError(proLaboreInput, "⚠️ Nenhum valor pode ser negativo."); return; }
     if (checkboxOpcional.checked && salarioAnualInformado !== null && salarioAnualInformado < 0) {
-      setFieldError(salarioAnualInput, "⚠️ Nenhum valor pode ser negativo. Corrija antes de continuar.");
-      return;
+      setFieldError(salarioAnualInput, "⚠️ Nenhum valor pode ser negativo."); return;
     }
 
     if (salarioBruto <= 0 && rendaExterior <= 0) {
       setFieldError(salarioBrutoInput, "⚠️ Informe pelo menos um salário (bruto ou renda do exterior).");
-      setTimeout(() => {
-        setFieldError(rendaExteriorInput, "⚠️ Informe pelo menos um salário (bruto ou renda do exterior).");
-      }, 300);
+      setTimeout(() => setFieldError(rendaExteriorInput, "⚠️ Informe pelo menos um salário (bruto ou renda do exterior)."), 300);
       return;
     }
 
     if (checkboxOpcional.checked && (salarioAnualInformado === null || salarioAnualInformado <= 0)) {
-      setFieldError(salarioAnualInput, "⚠️ O campo Salário Anual está ativo — preencha um valor maior que zero ou desative o campo opcional.");
+      setFieldError(salarioAnualInput, "⚠️ Salário anual ativo — preencha valor > 0 ou desative o campo opcional.");
       return;
     }
 
@@ -238,32 +223,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const faturamentoAnualTotal = salarioAnualFinal;
-    const faturamentoMensalParaDAS = faturamentoAnualTotal / 12;
-
-    const rd = salarioBruto;      // faturamento doméstico mensal (bruto)
-    const re = rendaExterior;     // faturamento exterior mensal
-
+    const rd = salarioBruto;
+    const re = rendaExterior;
     const aliquotaISS = parseFloat(municipioISSSelect.value) || 5;
 
     atualizarMensagemProLabore();
 
-    const mei = calcularMEI(rd, re);
+    const mei = calcularMEI(rd, re, faturamentoAnualTotal);
     const simples = calcularSimples(faturamentoAnualTotal, rd, re, proLabore);
     const lp = calcularLucroPresumido(rd, re, aliquotaISS);
 
-    // preencher MEI
     const meiDAS = document.getElementById("meiDAS");
     const meiTotalImpostos = document.getElementById("meiTotalImpostos");
     const meiLiquido = document.getElementById("meiLiquido");
     const meiDetailsDASTotal = document.getElementById("meiDetailsDASTotal");
     const meiDetailsLiquido = document.getElementById("meiDetailsLiquido");
-    if (meiDAS) meiDAS.textContent = formatMoney(mei.DAS);
-    if (meiTotalImpostos) meiTotalImpostos.textContent = formatMoney(mei.totalImpostos);
-    if (meiLiquido) meiLiquido.textContent = formatMoney(mei.liquido);
-    if (meiDetailsDASTotal) meiDetailsDASTotal.textContent = formatMoney(mei.totalImpostos);
-    if (meiDetailsLiquido) meiDetailsLiquido.textContent = formatMoney(mei.liquido);
 
-    // preencher Simples
+    if (mei.excedeu) {
+      if (meiDAS) meiDAS.textContent = "Excedeu o limite anual";
+      if (meiTotalImpostos) meiTotalImpostos.textContent = "Excedeu o limite anual";
+      if (meiLiquido) meiLiquido.textContent = "Excedeu o limite anual";
+      if (meiDetailsDASTotal) meiDetailsDASTotal.textContent = "Excedeu o limite anual";
+      if (meiDetailsLiquido) meiDetailsLiquido.textContent = "Excedeu o limite anual";
+    } else {
+      if (meiDAS) meiDAS.textContent = formatMoney(mei.DAS);
+      if (meiTotalImpostos) meiTotalImpostos.textContent = formatMoney(mei.totalImpostos);
+      if (meiLiquido) meiLiquido.textContent = formatMoney(mei.liquido);
+      if (meiDetailsDASTotal) meiDetailsDASTotal.textContent = formatMoney(mei.totalImpostos);
+      if (meiDetailsLiquido) meiDetailsLiquido.textContent = formatMoney(mei.liquido);
+    }
+
     const pjSimplesDAS = document.getElementById("pjSimplesDAS");
     const pjSimplesTotalImpostos = document.getElementById("pjSimplesTotalImpostos");
     const pjSimplesLiquido = document.getElementById("pjSimplesLiquido");
@@ -284,7 +273,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (descEl) descEl.textContent = `Melhor opção entre Anexo ${simples.anexo} (Fator R = ${(simples.fatorR * 100).toFixed(2)}%).`;
     }
 
-    // preencher Lucro Presumido (ATENÇÃO: atualiza *ambos* os lugares do ISS)
     const lpIRPJCSLL = document.getElementById("lpIRPJCSLL");
     const lpPISCOFINS = document.getElementById("lpPISCOFINS");
     const lpTotalImpostos = document.getElementById("lpTotalImpostos");
@@ -295,9 +283,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (lpTotalImpostos) lpTotalImpostos.textContent = formatMoney(lp.total);
     if (lpLiquido) lpLiquido.textContent = formatMoney(lp.liquido);
 
-    // **CORREÇÃO IMPORTANTE**: o ISS aparece em dois elementos no HTML.
-    const lpDetailsISS_top = document.getElementById("lpDetailsISS");       // mostra junto aos resumos
-    const lpDetailsISS_saber = document.getElementById("lpSaberMaisISS");  // mostra dentro do "Saber mais"
+    const lpDetailsISS_top = document.getElementById("lpDetailsISS");       // resumo (antes do saber mais)
+    const lpDetailsISS_saber = document.getElementById("lpSaberMaisISS");  // dentro do "Saber mais"
     if (lpDetailsISS_top) lpDetailsISS_top.textContent = formatMoney(lp.ISS || 0);
     if (lpDetailsISS_saber) lpDetailsISS_saber.textContent = formatMoney(lp.ISS || 0);
 
@@ -312,23 +299,26 @@ document.addEventListener("DOMContentLoaded", () => {
     if (lpDetailsCOFINS) lpDetailsCOFINS.textContent = formatMoney(lp.COFINS || 0);
     if (lpDetailsLiquido) lpDetailsLiquido.textContent = formatMoney(lp.liquido);
 
-    const candidatos = [
-      { nome: "MEI", valor: mei.liquido || -Infinity },
-      { nome: "PJ - Simples Nacional", valor: simples.liquido || -Infinity },
-      { nome: "PJ - Lucro Presumido", valor: lp.liquido || -Infinity }
-    ];
+    const candidatos = [];
+    if (!mei.excedeu) candidatos.push({ nome: "MEI", valor: mei.liquido || -Infinity });
+    candidatos.push({ nome: "PJ - Simples Nacional", valor: simples.liquido || -Infinity });
+    candidatos.push({ nome: "PJ - Lucro Presumido", valor: lp.liquido || -Infinity });
+
     const melhor = candidatos.reduce((a, b) => (b.valor > a.valor ? b : a));
     const bestOptionName = document.getElementById("bestOptionName");
     const bestOptionValue = document.getElementById("bestOptionValue");
     const comparisonSavings = document.getElementById("comparisonSavings");
-    if (bestOptionName) bestOptionName.textContent = melhor.nome;
-    if (bestOptionValue) bestOptionValue.textContent = formatMoney(melhor.valor);
-    if (comparisonSavings) comparisonSavings.textContent = formatMoney(melhor.valor - (mei.liquido || 0));
+    if (bestOptionName) bestOptionName.textContent = melhor ? melhor.nome : "...";
+    if (bestOptionValue) bestOptionValue.textContent = melhor ? formatMoney(melhor.valor) : "R$ 0,00";
+
+    if (comparisonSavings) {
+      if (!mei.excedeu) comparisonSavings.textContent = formatMoney((melhor.valor || 0) - (mei.liquido || 0));
+      else comparisonSavings.textContent = "—";
+    }
 
     const headerEl = document.querySelector(".header");
     if (headerEl) headerEl.classList.remove("hidden");
 
-    // reactivar toggles caso detalhes tenham sido alterados dinamicamente
     ativarToggles();
   });
 
@@ -349,6 +339,3 @@ document.addEventListener("DOMContentLoaded", () => {
     ativarToggles();
   });
 });
-
-
-
