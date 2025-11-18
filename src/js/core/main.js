@@ -128,34 +128,60 @@ document.addEventListener("DOMContentLoaded", () => {
     return ((faturamentoAnual * faixa.aliquota - faixa.deducao) / faturamentoAnual);
   }
 
-  function calcularMEI(faturamentoMensal, rendaExterior) {
-    const DAS = 70.6;
+  // MEI: recebe faturamento doméstico e faturamento exterior separadamente.
+  function calcularMEI(faturamentoDomesticoMensal, faturamentoExteriorMensal) {
+    const rd = faturamentoDomesticoMensal || 0;
+    const re = faturamentoExteriorMensal || 0;
+    const totalFaturamento = rd + re;
+    const DAS = 70.6; // valor aproximado mensal do DAS-MEI
     const totalImpostos = DAS;
-    const liquido = (faturamentoMensal || 0) - totalImpostos + (rendaExterior || 0);
+    const liquido = totalFaturamento - totalImpostos;
     return { DAS, totalImpostos, liquido };
   }
 
-  function calcularSimples(faturamentoAnualParaTabela, faturamentoMensalParaDAS, proLabore, rendaExterior) {
+  // Simples: usa faturamento anual total para faixa e fator R,
+  // aplica aliquotaEfetiva sobre doméstico, e remove PIS/COFINS da parcela externa
+  function calcularSimples(faturamentoAnualTotal, faturamentoDomesticoMensal, faturamentoExteriorMensal, proLabore) {
     const proLaboreAnual = (proLabore || 0) * 12;
-    const fatorR = faturamentoAnualParaTabela > 0 ? proLaboreAnual / faturamentoAnualParaTabela : 0;
+    const fatorR = faturamentoAnualTotal > 0 ? proLaboreAnual / faturamentoAnualTotal : 0;
     const anexoKey = fatorR >= 0.28 ? "III" : "V";
-    const aliquotaEfetiva = calcularAliquotaEfetiva(faturamentoAnualParaTabela, anexoKey);
-    const dasMensal = (faturamentoMensalParaDAS || 0) * aliquotaEfetiva;
-    const totalImpostos = dasMensal;
-    const liquido = (faturamentoMensalParaDAS || 0) - totalImpostos + (rendaExterior || 0);
+    const aliquotaEfetiva = calcularAliquotaEfetiva(faturamentoAnualTotal, anexoKey);
+
+    const pisCofinsRate = 0.0065 + 0.03; // 0.0365 combinado
+
+    const rd = faturamentoDomesticoMensal || 0;
+    const re = faturamentoExteriorMensal || 0;
+
+    const dasDomestico = rd * aliquotaEfetiva;
+    const aliquotaExternaAplicavel = Math.max(0, aliquotaEfetiva - pisCofinsRate);
+    const dasExterno = re * aliquotaExternaAplicavel;
+
+    const dasMensal = dasDomestico + dasExterno;
+    const totalImpostos = dasMensal; // neste modelo simplificado consideramos só DAS
+    const liquido = rd + re - totalImpostos;
+
     return { anexo: anexoKey, fatorR, aliquotaEfetiva, dasMensal, totalImpostos, liquido };
   }
 
-  function calcularLucroPresumido(faturamentoMensal, aliquotaISS, rendaExterior) {
-    const basePresumida = (faturamentoMensal || 0) * 0.32;
+  // Lucro Presumido: IRPJ/CSLL sobre base presumida (total), PIS/COFINS só sobre doméstico, ISS sobre total
+  function calcularLucroPresumido(faturamentoDomesticoMensal, faturamentoExteriorMensal, aliquotaISS) {
+    const rd = faturamentoDomesticoMensal || 0;
+    const re = faturamentoExteriorMensal || 0;
+    const faturamentoTotal = rd + re;
+
+    const basePresumida = faturamentoTotal * 0.32;
     const IRPJ = basePresumida * 0.15;
     const adicionalIR = basePresumida > 20000 ? (basePresumida - 20000) * 0.1 : 0;
     const CSLL = basePresumida * 0.09;
-    const PIS = (faturamentoMensal || 0) * 0.0065;
-    const COFINS = (faturamentoMensal || 0) * 0.03;
-    const ISS = (faturamentoMensal || 0) * (aliquotaISS / 100);
+
+    const PIS = rd * 0.0065;
+    const COFINS = rd * 0.03;
+
+    const ISS = faturamentoTotal * (aliquotaISS / 100);
+
     const total = IRPJ + adicionalIR + CSLL + PIS + COFINS + ISS;
-    const liquido = (faturamentoMensal || 0) - total + (rendaExterior || 0);
+    const liquido = faturamentoTotal - total;
+
     return { IRPJ, adicionalIR, CSLL, PIS, COFINS, ISS, total, liquido };
   }
 
@@ -208,25 +234,24 @@ document.addEventListener("DOMContentLoaded", () => {
       salarioAnualFinal = salarioAnualInformado;
     } else {
       const positivos = [salarioBruto, rendaExterior].filter(v => v > 0);
-      salarioAnualFinal = positivos.length === 2 ? ((salarioBruto + rendaExterior) / 2) * 12 : positivos[0] * 12;
+      salarioAnualFinal = positivos.length === 2 ? ((salarioBruto + rendaExterior) / 2) * 12 : (positivos[0] || 0) * 12;
     }
 
-    const faturamentoDomesticoAnual = salarioBruto > 0 ? salarioBruto * 12 : 0;
-    const faturamentoParaTabelaAnual =
-      faturamentoDomesticoAnual > 0
-        ? faturamentoDomesticoAnual
-        : Math.max(0, salarioAnualFinal - (rendaExterior > 0 ? rendaExterior * 12 : 0));
+    const faturamentoAnualTotal = salarioAnualFinal;
+    const faturamentoMensalParaDAS = faturamentoAnualTotal / 12;
 
-    const faturamentoMensalParaDAS = salarioAnualFinal / 12;
+    const rd = salarioBruto;      // faturamento doméstico mensal (bruto)
+    const re = rendaExterior;     // faturamento exterior mensal
 
     const aliquotaISS = parseFloat(municipioISSSelect.value) || 5;
 
     atualizarMensagemProLabore();
 
-    const mei = calcularMEI(faturamentoMensalParaDAS, rendaExterior);
-    const simples = calcularSimples(faturamentoParaTabelaAnual, faturamentoMensalParaDAS, proLabore, rendaExterior);
-    const lp = calcularLucroPresumido(faturamentoMensalParaDAS, aliquotaISS, rendaExterior);
+    const mei = calcularMEI(rd, re);
+    const simples = calcularSimples(faturamentoAnualTotal, rd, re, proLabore);
+    const lp = calcularLucroPresumido(rd, re, aliquotaISS);
 
+    // preencher MEI
     const meiDAS = document.getElementById("meiDAS");
     const meiTotalImpostos = document.getElementById("meiTotalImpostos");
     const meiLiquido = document.getElementById("meiLiquido");
@@ -238,6 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (meiDetailsDASTotal) meiDetailsDASTotal.textContent = formatMoney(mei.totalImpostos);
     if (meiDetailsLiquido) meiDetailsLiquido.textContent = formatMoney(mei.liquido);
 
+    // preencher Simples
     const pjSimplesDAS = document.getElementById("pjSimplesDAS");
     const pjSimplesTotalImpostos = document.getElementById("pjSimplesTotalImpostos");
     const pjSimplesLiquido = document.getElementById("pjSimplesLiquido");
@@ -258,26 +284,32 @@ document.addEventListener("DOMContentLoaded", () => {
       if (descEl) descEl.textContent = `Melhor opção entre Anexo ${simples.anexo} (Fator R = ${(simples.fatorR * 100).toFixed(2)}%).`;
     }
 
+    // preencher Lucro Presumido (ATENÇÃO: atualiza *ambos* os lugares do ISS)
     const lpIRPJCSLL = document.getElementById("lpIRPJCSLL");
     const lpPISCOFINS = document.getElementById("lpPISCOFINS");
     const lpTotalImpostos = document.getElementById("lpTotalImpostos");
     const lpLiquido = document.getElementById("lpLiquido");
+
     if (lpIRPJCSLL) lpIRPJCSLL.textContent = formatMoney((lp.IRPJ || 0) + (lp.CSLL || 0));
     if (lpPISCOFINS) lpPISCOFINS.textContent = formatMoney((lp.PIS || 0) + (lp.COFINS || 0));
     if (lpTotalImpostos) lpTotalImpostos.textContent = formatMoney(lp.total);
     if (lpLiquido) lpLiquido.textContent = formatMoney(lp.liquido);
 
+    // **CORREÇÃO IMPORTANTE**: o ISS aparece em dois elementos no HTML.
+    const lpDetailsISS_top = document.getElementById("lpDetailsISS");       // mostra junto aos resumos
+    const lpDetailsISS_saber = document.getElementById("lpSaberMaisISS");  // mostra dentro do "Saber mais"
+    if (lpDetailsISS_top) lpDetailsISS_top.textContent = formatMoney(lp.ISS || 0);
+    if (lpDetailsISS_saber) lpDetailsISS_saber.textContent = formatMoney(lp.ISS || 0);
+
     const lpDetailsIRPJ = document.getElementById("lpDetailsIRPJ");
     const lpDetailsCSLL = document.getElementById("lpDetailsCSLL");
     const lpDetailsPIS = document.getElementById("lpDetailsPIS");
     const lpDetailsCOFINS = document.getElementById("lpDetailsCOFINS");
-    const lpDetailsISS = document.getElementById("lpDetailsISS");
     const lpDetailsLiquido = document.getElementById("lpDetailsLiquido");
     if (lpDetailsIRPJ) lpDetailsIRPJ.textContent = formatMoney(lp.IRPJ || 0);
     if (lpDetailsCSLL) lpDetailsCSLL.textContent = formatMoney(lp.CSLL || 0);
     if (lpDetailsPIS) lpDetailsPIS.textContent = formatMoney(lp.PIS || 0);
     if (lpDetailsCOFINS) lpDetailsCOFINS.textContent = formatMoney(lp.COFINS || 0);
-    if (lpDetailsISS) lpDetailsISS.textContent = formatMoney(lp.ISS || 0);
     if (lpDetailsLiquido) lpDetailsLiquido.textContent = formatMoney(lp.liquido);
 
     const candidatos = [
@@ -295,6 +327,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const headerEl = document.querySelector(".header");
     if (headerEl) headerEl.classList.remove("hidden");
+
+    // reactivar toggles caso detalhes tenham sido alterados dinamicamente
+    ativarToggles();
   });
 
   resetButton.addEventListener("click", () => {
@@ -314,3 +349,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ativarToggles();
   });
 });
+
+
+
