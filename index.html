@@ -386,6 +386,7 @@
       <script src="src/js/features/simulator/helpers.js"></script>
       <script src="src/js/features/simulator/calculator.js"></script>
       <script src="src/js/features/simulator/simulator.js"></script>
+      <script src="src/js/features/ai-chat/chat.js"></script>
 
       <script src="src/js/ui/ui.js"></script>
       <script src="src/js/ui/navigation.js"></script>
@@ -403,6 +404,25 @@
   <!-- Botão flutuante de IA -->
   <div class="floating-ai-button">
     NEON
+  </div>
+
+  <!-- Chat da IA -->
+  <div id="ai-chat" class="chat-container hidden">
+    <div class="chat-header">
+      <h3 class="chat-title">Assistente de IA</h3>
+      <button id="close-chat" class="chat-close-button">
+        <i data-lucide="x" class="icon"></i>
+      </button>
+    </div>
+    <div id="chat-messages" class="chat-messages">
+      <!-- Messages will be appended here -->
+    </div>
+    <div class="chat-input-container">
+      <input type="text" id="chat-input" class="chat-input" placeholder="Digite sua mensagem...">
+      <button id="chat-send" class="chat-send-button">
+        <i data-lucide="send" class="icon"></i>
+      </button>
+    </div>
   </div>
 
 </body>

@@ -338,4 +338,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (headerEl) headerEl.classList.add("hidden");
     ativarToggles();
   });
+
+  initializeAIChat();
 });
