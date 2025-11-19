@@ -8,7 +8,7 @@
 /* Título principal do cabeçalho */
 .header__title {
     font-size: 2.25rem;
-    font-weight: bold;
+    font-weight: 700;
     color: var(--color-primary); /* Cor primária do tema */
 }
 @media (min-width: 768px) {
@@ -21,4 +21,6 @@
 .header__subtitle {
     color: var(--text-secondary); /* Cor secundária do texto do tema */
     margin-top: 0.5rem; /* Margem superior */
+    font-size: 1.1rem;
+    font-weight: 400;
 }

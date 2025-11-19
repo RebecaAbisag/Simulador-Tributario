@@ -37,6 +37,7 @@
 .details-container h4 {
     margin-bottom: 1rem;
     color: var(--text-color-light);
+    font-weight: 600;
 }
 
 .details-table {
@@ -48,7 +49,7 @@
 .details-table td {
     padding: 0.6rem 0; /* Aumenta o padding para melhor espaçamento */
     border-bottom: 1px solid var(--border-color-light); /* Linha mais suave */
-    font-size: 0.95rem;
+    font-size: 1rem;
 }
 
 .details-table tr:last-child td {
@@ -61,7 +62,7 @@
 
 .details-table td:last-child {
     text-align: right;
-    font-weight: bold;
+    font-weight: 600;
     color: var(--text-color);
 }
 

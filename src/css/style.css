@@ -9,6 +9,7 @@
 @import url('./components/_floating-elements.css');
 @import url('./components/_accountant-cards.css');
 @import url('./components/_floating-button.css');
+@import url('./components/_tooltips.css');
 
 /* Layout specific imports */
 @import url('./layout/_nav.css');

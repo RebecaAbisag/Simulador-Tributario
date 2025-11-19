@@ -4,6 +4,12 @@
     height: 1.5rem;
 }
 
+.icon--info {
+    width: 1rem;
+    height: 1rem;
+    color: var(--text-color-secondary);
+}
+
 /* Animação de rotação para ícones (usado em loaders) */
 .icon--spin {
     animation: spin 1s linear infinite;

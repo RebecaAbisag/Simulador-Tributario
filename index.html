@@ -69,12 +69,15 @@
         <form id="calculatorForm" class="form">
           <!-- Grupo de formulário para Salário Bruto -->
           <div class="form__group">
-            <div>
+            <div class="form__label-group">
               <label for="salarioBruto" class="form__label"> Faturamento Mensal BR (R$)</label>
-              <input type="number" id="salarioBruto" placeholder="Ex: 15000" required class="form__input" value="10000"
-                step="0.01">
-              <p class="form__tip">Valor da renda obtida para prestação de serviço Brasil.</p>
+              <div class="tooltip">
+                <i data-lucide="info" class="icon icon--info"></i>
+                <span class="tooltiptext">Informe o valor total que você fatura por mês com clientes no Brasil, sem descontar impostos. Exemplo: 10000</span>
+              </div>
             </div>
+            <input type="number" id="salarioBruto" placeholder="Ex: 15000" required class="form__input" value="10000"
+              step="0.01">
           </div>
           <!-- CheckBox -->
           <div class="form__group">
@@ -85,42 +88,58 @@
           <!-- (Campo opcional) Salário Bruto Anual -->
           <div class="form__group">
             <div id="campoOpcional" class="hidden form_alt">
-              <label for="salarioAnual">Salário Bruto Anual </label>
+              <div class="form__label-group">
+                <label for="salarioAnual">Salário Bruto Anual </label>
+                <div class="tooltip">
+                  <i data-lucide="info" class="icon icon--info"></i>
+                  <span class="tooltiptext">Se você conhece seu faturamento anual, insira o valor total aqui. Se não, este campo será calculado automaticamente com base no seu faturamento mensal.</span>
+                </div>
+              </div>
               <input type="number" id="salarioAnual" step="0.01" placeholder="0,00">
-              <p class="form__tip">Valor opcional se não preenchido será utilizado o Salário Bruto Mensal x 12.</p>
             </div>
           </div>
 
           <!-- Grupo de formulário para Pró-labore -->
           <div class="form__group">
-            <div>
+            <div class="form__label-group">
               <label for="proLabore" class="form__label">Gastos com Folha e Pró-labore (R$)</label>
-              <input type="number" id="proLabore" placeholder="Ex: 4000 (Obrigatório >= 28% do Salário Bruto)" required
-                class="form__input" value="4000" step="0.01">
-              <p id="proLaboreWarning" class="form__warning"></p>
-              <p class="form__tip">Usado para cálculo do fator R.</p>
+              <div class="tooltip">
+                <i data-lucide="info" class="icon icon--info"></i>
+                <span class="tooltiptext">Inclua aqui seus gastos com salários de funcionários (se houver) e o seu próprio salário (pró-labore). Este valor é importante para o cálculo do Fator R. Recomenda-se um valor de pelo menos 28% do seu faturamento para otimizar os impostos no Simples Nacional.</span>
+              </div>
             </div>
+            <input type="number" id="proLabore" placeholder="Ex: 4000 (Obrigatório >= 28% do Salário Bruto)" required
+              class="form__input" value="4000" step="0.01">
+            <p id="proLaboreWarning" class="form__warning"></p>
           </div>
 
           <!-- Novo Grupo de formulário para Renda Fora do Brasil -->
           <div class="form__group">
-            <div>
+            <div class="form__label-group">
               <label for="rendaExterior" class="form__label">Faturamento Mensal Exterior (R$)</label>
-              <input type="number" id="rendaExterior" placeholder="Ex: 2000" class="form__input" value="0">
-              <p class="form__tip">Valor da renda obtida para prestação de serviço no exterior.</p>
+              <div class="tooltip">
+                <i data-lucide="info" class="icon icon--info"></i>
+                <span class="tooltiptext">Informe o valor total que você fatura por mês com clientes fora do Brasil. Este valor tem tributação diferente para PIS e COFINS.</span>
+              </div>
             </div>
+            <input type="number" id="rendaExterior" placeholder="Ex: 2000" class="form__input" value="0">
           </div>
 
           <!-- Grupo de formulário para Alíquota ISS -->
           <div class="form__group">
-            <label for="municipioISS" class="form__label">Município (Alíquota ISS)</label>
+            <div class="form__label-group">
+              <label for="municipioISS" class="form__label">Município (Alíquota ISS)</label>
+              <div class="tooltip">
+                <i data-lucide="info" class="icon icon--info"></i>
+                <span class="tooltiptext">Selecione o seu município ou a alíquota de ISS correspondente. A alíquota padrão é 5%, mas pode variar. Verifique a alíquota do seu município para um cálculo mais preciso.</span>
+              </div>
+            </div>
             <select id="municipioISS" class="form__select">
               <option value="5">Município Padrão (ISS 5%)</option>
               <option value="4">ISS 4%</option>
               <option value="3">ISS 3%</option>
               <option value="2">ISS 2%</option>
             </select>
-            <p class="form__tip">A alíquota de ISS varia por município (geralmente entre 2% e 5%).</p>
           </div>
 
           <!-- Ações do formulário: botões de calcular e limpar -->
