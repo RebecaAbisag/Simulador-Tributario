@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
       salarioAnualFinal = salarioAnualInformado;
     } else {
       const positivos = [salarioBruto, rendaExterior].filter(v => v > 0);
-      salarioAnualFinal = positivos.length === 2 ? ((salarioBruto + rendaExterior) / 2) * 12 : (positivos[0] || 0) * 12;
+      salarioAnualFinal = positivos.length === 2 ? ((salarioBruto + rendaExterior) ) * 12 : (positivos[0] || 0) * 12;
     }
 
     const faturamentoAnualTotal = salarioAnualFinal;
